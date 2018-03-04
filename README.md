@@ -8,7 +8,7 @@ Quality English documents reading plan.
 ## 主要内容
 - 编程语言相关
   - placehold
-在Git中执行撤销操  (How to undo (almost) anything with Git)
+
 - 算法相关
   - placehold
 
