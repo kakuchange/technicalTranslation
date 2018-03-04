@@ -1,11 +1,12 @@
 # technicalTranslation
-Quality English documents reading plan.
+ Quality English documents reading plan.
 
-## 简介:有质量的英文"文档"翻译
+### 简介:有质量的英文"文档"翻译
 
 此项目为个人学习计划的一部分, 可能会涉及的方面有些多杂(从编程语言到算法, 再到提升效率的工具),文章的各类也会比较杂(官方文档, 博客, 问答...). 我更可能的以上面提到的内容来分类,使之成为更方便的学习索引. 
 
-## 主要内容
+### 主要内容
+
 - 编程语言相关
   - placehold
 
