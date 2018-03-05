@@ -178,18 +178,18 @@
 ### 额外补充图:  
 1. [stackoverflow上有关soft, mixed(default), hard三种merge模式的区别的图](https://stackoverflow.com/questions/3528245/whats-the-difference-between-git-reset-mixed-soft-and-hard)
 
-![git tree movements visualized](./img/git_tree_movement.jpg)
+![git tree movements visualized](../img/git_tree_movement.jpg)
 
 2. [git 基本概念的图](http://blog.csdn.net/xiantian7/article/details/19048913)
 
-![git_basic_concept](./img/git_basic_concept.svg)
+![git_basic_concept](../img/git_basic_concept.svg)
 
 3. git distribution 辅助理解图
 
-![git_distribution](./img/git_distribution.jpeg)
+![git_distribution](../img/git_distribution.jpeg)
 
 4. 同时我自己也总结了一份不太成体系的命令集, 也一并贴出.  
-[git 常用命令集合]()
+[git 常用命令集合](https://github.com/kakuchange/technicalTranslation/blob/master/other/git_command.md)
 
 ## 注意
 
