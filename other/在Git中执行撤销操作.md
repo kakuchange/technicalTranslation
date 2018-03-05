@@ -61,7 +61,7 @@
 
 - 你的reflog仅属于你自己, 你不能用git reflog存储别的开发者未push的commit.
 
-![git reflog](./img/git_reflog.png)
+![git reflog](../img/git_reflog.png)
 
 那,如何通过reflog 去"redo" 先前的"undone" commit(s)?这取决于你想要实现什么效果:
 
@@ -109,7 +109,7 @@
 
 ```rebase -i ``` 将会打开你默认的text editor, with a list of commits being applied. like this:
 
-![rebase history](./img/rebase_history.png)
+![rebase history](../img/rebase_history.png)
 
 前2列是健, 第一个是是否选中, 对第二个<SHA>所标识的commit. 默认的, ```rebase -i ```假设每一个commit 都被选中.
 
@@ -119,7 +119,7 @@
 
 如果你想合并2个commit到一起,你可以使用, squash or fixup, 如下:
 
-![squash_fixup](./img/squash_fixup.png)
+![squash_fixup](../img/squash_fixup.png)
 
 ```squash``` and ```fixup``` 会将它这一行与"上面"一次合并提交(in this scenario, 0835fe2 and 6943e85 will be combined into one commit, then 38f5e4e and af67f82 will be combined together into another.).
 
@@ -127,7 +127,7 @@
 
 当你保存并退出编辑器时, Git将应用你的commmits 以从上到下的顺序, 你可以更改commit的顺序, 如果你想的话(举例说明:you could have combined af67f82 with 0835fe2 by arranging things like this:)
 
-![squash_fixup2](./img/squash_fixup2.png)
+![squash_fixup2](../img/squash_fixup2.png)
 
 ### 更正较早前的提交
 
@@ -141,7 +141,7 @@
 
 ```rebase --autosquash -i``` 将launch an interactive rebase editor, but the editor will open with any squash! and fixup! commits already paired to be commit target in the list of commits, like so(这段说,加了--autosquash标识的rebase已经会有些许squash or fixup, commits 已经自动配好了对):
 
-![squash_fixup3](./img/squash_fixup3.png)
+![squash_fixup3](../img/squash_fixup3.png)
 
 当使用 --squash or --fixup commit 时,你可能不会用具体的<SHA>, 你可能会使用Git's ^ and ~ 操作符. HEAD^ 是HEAD前一个提交. HEAD~4是4个commits before HEAD(总共5个揭)
 
