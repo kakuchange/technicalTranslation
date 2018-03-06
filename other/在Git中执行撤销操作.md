@@ -1,4 +1,11 @@
-### 翻译自[How to undo (almost) anything with Git](https://blog.github.com/2015-06-08-how-to-undo-almost-anything-with-git/)
+## 怎样撤销几乎所有的Git版本管理的操作
+
+## 翻译自[How to undo (almost) anything with Git](https://blog.github.com/2015-06-08-how-to-undo-almost-anything-with-git/)
+
+## 原作者: [Joshua Wehner](https://github.com/jaw6)
+
+## 译者: [kaku](https://github.com/kakuchange)
+---
 
 ## 怎样撤销几乎所有的Git版本管理的操作
 
