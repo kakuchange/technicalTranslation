@@ -8,15 +8,21 @@
 ### 主要内容
 
 - 编程语言相关
-  - placehold
+    - [] [Python](https://github.com/kakuchange/pythonSkill)
+        - [x] [pep8](https://www.python.org/dev/peps/pep-0008/)
 
+    - [] [Golang](https://golang.org/)
 - 算法相关
   - placehold
 
 - 算法部分的内容, 会记录在另一个repo: [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
 
 - 其它
-  - [在Git中执行撤销操作](https://github.com/kakuchange/technicalTranslation/blob/master/other/%E5%9C%A8Git%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C.md)  
+  - [x] [在Git中执行撤销操作](https://github.com/kakuchange/technicalTranslation/blob/master/other/%E5%9C%A8Git%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C.md)  
     [How to undo (almost) anything with Git](https://blog.github.com/2015-06-08-how-to-undo-almost-anything-with-git/)
+
+  - [ ] [Python编码规范]()
+    [Python Enhancement Proposal 8(pep8)](Style Guide for Python Code )
+
 
 ### 注意:本人尽可能保证文章翻译质量, 但也难免有理解不准确的地方, 欢迎大家指出.  
