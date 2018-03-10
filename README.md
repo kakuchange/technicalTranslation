@@ -9,7 +9,7 @@
 
 - 编程语言相关
     - [ ] [Python](https://github.com/kakuchange/pythonSkill)
-        - [ ] [Python编码规范]()
+        - [ ] [Python编码规范](https://github.com/kakuchange/technicalTranslation/blob/master/language/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83.md)
           [Style Guide for Python Code (Python Enhancement Proposal pep8)]()
 
     - [ ] [Golang](https://golang.org/)
