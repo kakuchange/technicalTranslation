@@ -10,7 +10,7 @@
 - 编程语言相关
     - [ ] [Python](https://github.com/kakuchange/pythonSkill)
         - [ ] [Python编码规范]()
-          [Python Enhancement Proposal 8(pep8)](Style Guide for Python Code )
+          [Style Guide for Python Code (Python Enhancement Proposal pep8)]()
 
     - [ ] [Golang](https://golang.org/)
 - 算法相关
