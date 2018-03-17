@@ -14,9 +14,8 @@
 
     - [ ] [Golang](https://golang.org/)
 - 算法相关
-  - placehold
 
-- 算法部分的内容, 会记录在另一个repo: [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
+    - 算法部分的内容, 会记录在另一个repo: [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
 
 - 其它
   - [x] [在Git中执行撤销操作](https://github.com/kakuchange/technicalTranslation/blob/master/other/%E5%9C%A8Git%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C.md)  
