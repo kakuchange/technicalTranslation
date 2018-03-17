@@ -572,6 +572,82 @@ Note: 当使用驼峰命名法时, 缩写的首字母应该大写, 如HTTPServer
 
 同时也有关于使用前缀, 表示一组相关名字的风格, 这不常用在Python中, 但这也提及出于完整性的考量. 如: the os.stat() function returns a tuple whose items traditionally have names like st_mode, st_size, st_mtime and so on. (this is done to emphasize the correspondence with the fields of the POSIX system call struct, which helps programmer familiar with that.)
 
+The X11 library uses a leading X for all its public functions. In Python, 这样的风格是不必须的, 因为所有的属性方法都有相同的类名为前缀, 而函数都有module名为前缀.
+
+此外, 以下特殊的形式(使用在开头或尾部的下划线), 是被认可的(这样的形式可以与其它约定结合使用, 通常):
+
+- _single_leading_underscore: 仅在内部使用的标志. 如: from M import * does not import objects whose name starts with an underscore.
+
+- single_trailing_underscore_: 被约定用来避免跟Python关键词冲突.eg:
+
+```Tkinter.Toplevel(master, class_='ClassName')```
+
+- __double_leading_underscore: 用来私有变量, when naming a class attribute, invokes name mangling (inside class FooBar, __boo becomes _FooBar_boo; see blow).
+
+- \_\_double_leading_and_trailing_underscore\_\_: "magic" objects or attributes that live in user-controlled namespaces. Eg:. \_\_init\_\_, \_\_import\_\_ or \_\_file\_\_. Never invent such name; only use them as documented. 前后双下划线的为魔术方法(属性), 不要创造这样的名字, 并且使用它们按文档说明.
+
+#### Prescriptive: Naming Conventions
+
+**Names to Avoid**
+
+不要使用"l", "o", 作为一个单字母的变量.
+
+在某些字体中, 很难它们与1, 0 ,分开, 应该代而使用大写的L, 代替l.
+
+**ASCII Compatibility**
+
+标识符在标准库中必须使用ASCII能兼容的, 在pep 3131中有描述.
+
+**Package and Module Names**
+
+模块(module)名应该简短, 全为小写字母. 下划线可以被使用, 如果能提前可读性. Python 包(package)也应该是简短小写字母, 然而下划线不被推荐使用.
+
+When an extension module written in C or C++ has an accompanying Python module that provides a higher level (e.g. more object oriented) interface, the C/C++ module has a leading underscore (e.g. _socket).(这一段说, 当拓展模块为c/c++, 并有相应的Python module 提供更高层级的接口(更面向对象), c/++应该有前缀的下划线, 如:_socket).
+
+**Class Name**
+
+类名一般约定使用首字母大写风格.
+
+The naming convention for functions may be used instead in cases where the interface is documented and used primarily as a callable.(我的理解: 对于函数名的约定也可这样用, 而非文档中所记录的主要被用做callable的用途. ps: 感觉不通顺...但意思到了.)
+
+注意, 对于builtin names 有独立的约定. 大多数的builtin names 为单个单词(或2个单词合并(run together)), CapWords(大驼峰命名法)仅在Exception, builtin constants(异常命名与内建常量)中使用.
+
+**Type variable names**
+
+Names of type variables 在PEP 484中被介绍, 通常使用CapWords preferring short names: T, AnyStr, Num. 被推荐增加前缀, _co or _contra to the variables used to declare covariant or contravariant(增加这2种前缀, 表示该变量为"协同变量", 或"逆变量").eg:
+
+```
+from typing import TypeVar
+
+VT_co = TypeVar('VT_co', covariant=True)
+KT_contra = TypeVar('KT_contra', contravariant=True)
+```
+
+**Exception Names**
+
+由于异常应该是一个类, 类名的规定这里也适用, 然而, 你应该使用Error(suffix)尾缀.
+
+**Global Variable Names**
+
+(Let's hope that these variables are meant for use inside one module only.) The conventions are about the same as those for functions.(对于只在内部使用的变量, 与前面function的约定相同)
+
+Modules that are designed for use via from M import * should use the \_\_all\_\_ mechanism to prevent exporting globals, or use the older convention of prefixing such globals with an underscore (which you might want to do to indicate these globals are "module non-public"). (使用\_\_all\_\_或者显示的加下线前缀, 来指明哪些是module不暴露给外部的)
+
+**Functioin and variable names**
+
+Function names should be lowercase, with words separeted by underscores as necessary to improve readability.(函数名应该小写, 有必要的话可以以下划线分隔开)
+
+变量名与函数名约定相同.
+
+mixedCase is allowed only in contexts where that's already the prevailing style (e.g. threading.py), to retain backwards compatibility.(mixedCase这种命名, 仅在已经这样使用, 出于兼容性考虑时被允许, 如threading.py)
+
+**Function and method arguments**
+
+使用self 作为实例方法的第一个参数.
+
+使用cls 作为类方法的第一个参数.
+
+
 
 
 
@@ -590,6 +666,10 @@ Note: 当使用驼峰命名法时, 缩写的首字母应该大写, 如HTTPServer
 
 3. 
 
+
+**brace**: 大括号(花括号)
+**bracket**: 中括号(方括号)
+**parenthese**: 小括号(圆括号) 
 
 ## 注意
 
