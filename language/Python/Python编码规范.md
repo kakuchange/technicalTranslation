@@ -582,7 +582,7 @@ The X11 library uses a leading X for all its public functions. In Python, 这样
 
 ```Tkinter.Toplevel(master, class_='ClassName')```
 
-- __double_leading_underscore: 用来私有变量, when naming a class attribute, invokes name mangling (inside class FooBar, __boo becomes _FooBar_boo; see blow).
+- __double_leading_underscore: 用来非公有变量, when naming a class attribute, invokes name mangling (inside class FooBar, __boo becomes _FooBar_boo; see blow).
 
 - \_\_double_leading_and_trailing_underscore\_\_: "magic" objects or attributes that live in user-controlled namespaces. Eg:. \_\_init\_\_, \_\_import\_\_ or \_\_file\_\_. Never invent such name; only use them as documented. 前后双下划线的为魔术方法(属性), 不要创造这样的名字, 并且使用它们按文档说明.
 
@@ -647,7 +647,285 @@ mixedCase is allowed only in contexts where that's already the prevailing style 
 
 使用cls 作为类方法的第一个参数.
 
+如果函数的参数与保留关键词冲突, 通常更好的做法是在尾部加下划线而非使用缩写或(spelling corruption). 因此, class_ is better than clss. (也许使用同义词会更好)
 
+**Method Names and Instance Variables**
+
+与函数命名规则相同: lowercase with words separated by underscores as necessary to imporve readablity.
+
+Use one leading underscore only for non-pablic methods and instace variables.(仅在非暴露的方法或实例属性(变量)前加下划线)
+
+为了避免名字冲突与子类, 使用__(双下划线非公有) to invoke Python's name mangling rules.
+
+Python mangles these names with the class name: if class Foo has an attribute name \_\_a, if can't be accessed by Foo.\_\_a. (An insistent user could still gain access by calling Fooo._Foo__a.) Generally, double leading underscores should be used only to avoid anme conflicts with attributes in classes designed to be subclassed.(这一段说, 双下划线开头的类属性(非公有), 可以避免在子类继承时发生名字冲突, 这时对非公有的类属性的在类外的访问, 須像上面给出的那样访问. 这也是这么设计的初衷.)
+
+Note: there is sone controversy about the use of \_\_names (see below). (关于\_\_name的使用还有争论, 看下面).
+
+**Constants**
+
+常量经常定义在模块级, 并且全部以大写字母加下划线分隔单词. 例如: MAX_OVERFLOW and TOTAL.
+
+**Designing for inheritance**
+
+Always decide whether a class's methods and instance variables (collectively: "attributes") should be public or non-public. if in doubt, choose non-public; it's easier to make it public later than to make a public attribute non-public.(思考决定一个类的方法或,实例变量(统称为属性), 应该是公有还是非公有, 如果你不知道, 应该选择非公有. 因为之后如果你想使之成为公有,比公有变非公有, 更容易).
+
+Public attributes are those that you expect unrelated clients of your class to use, with your commitment to avoid backward incompatible changes. Non-public attributes are those that are not intended to be used by third parties; you make no guarantees that non-public attributes won't change or even be removed.(这段说, 一个公有的属性是你期望与类客户端使用无关的, 这些属性你承诺会避免出现向后不兼容的改动. 非公有, 即非公有属性, 是不打算被其它三方使用的, 你也不保证该非公有属性不会改动, 甚至移除.)
+
+We don't use the term "private" here, since no attribute is really private in Python (without a generally unnecessary amount of work).(我们不用"private"(私有), 由于Python中没有真正意义上的私有属性(Python没有做通常上是不必要的一系列工作))
+
+Another category of attributes are those that are part of the "subclass API" (often called "protected" in other languages). Some classes are designed to be inherited from, either to extend or modify aspects of the class's behavior. When designing such a class, take care to make explicit decisions about which attributes are public, which are part of the subclass API, and which are truly only to be used by your base class.(另一类属性是那些子类的接口, (在其它语言中称为protected), 一些类被设计用来继承, 拓展或调整类的某方面表现, 当设计这样的类时, 特别小心的显示决定哪些属性是公有, 哪些是类的API之一, 哪些仅在基类中使用.)
+
+With this in mind, here are the Pythonic guidelines:(这有些更Pythonic的指引)
+
+- Public attributes should have no leading underscores.(公有属性, 应该没有前缀的下划线.)
+
+- If your public attribute name collides with a reserved keyword, append a single trailing underscore to your attribute name. This is preferable to an abbreviation or corrupted spelling. (However, notwithstanding this rule, 'cls' is the preferred spelling for any variable or argument which is known to be a class, especially the first argument to a class method.)(前面说过, 关于函数参数与保留关键词冲突时的做法, 这里public attribute 一样. 不同的是, cls是类方法的第一个关键词)
+
+Note 1: See the argument name recommendation above for class methods.(注意, 参照前面有关类方法的命名推荐)
+
+- For simple public data attributes, it is best to expose just the attribute name, without complicated accessor/mutator methods. Keep in mind that Python provides an easy path to future enhancement, should you find that a simple data attribute needs to grow functional behavior. In that case, use properties to hide functional implementation behind simple data attribute access syntax.(这段说, 对于简单的公有数据属性, 暴露简单的属性访问比暴露一个复杂的函数调用更好, @property 实现, 后面会有一篇来说明property是如何工作的.)
+
+Note 1: Properties only work on new-style classes.(注意: property只在新式类使用)
+
+Note 2: Try to keep the functional behavior side-effect free, although side-effects such as caching are generally fine.(这段说, 对这样做的副作用要free? ps:猜测意为自由的, 不影响主要作用的...例如:缓存通常是可以接受的)
+
+Note 3: Avoid using properties for computationally expensive operations; the attribute notation makes the caller believe that access is (relatively) cheap.(避免在计算密集型的操作上使用property, 像属性一样的访问, 使得调用者认为这样访问是(相对)cheap(容易?))
+
+If your class is intended to be subclassed, and you have attributes that you do not want subclasses to use, consider naming them with double leading underscores and no trailing underscores. This invokes Python's name mangling algorithm, where the name of the class is mangled into the attribute name. This helps avoid attribute name collisions should subclasses inadvertently contain attributes with the same name.(使用非公有属性, 如果你的类被设计用来继承, 并一些属性不想被子类访问, 前面提过)
+
+Note 1: Note that only the simple class name is used in the mangled name, so if a subclass chooses both the same class name and attribute name, you can still get name collisions.(如果子类使用相同的类名与属性名, 还是用冲突)
+
+Note 2: Name mangling can make certain uses, such as debugging and \_\_getattr\_\_(), less convenient. However the name mangling algorithm is well documented and easy to perform manually.(name mangle can make certain uses, 如debugging 或通过\_\_getattr\_\_, 这减少了便利性, 但name mangling algorithm 有很好的文档, 易于手动执行)
+
+Note 3: Not everyone likes name mangling. Try to balance the need to avoid accidental name clashes with potential use by advanced callers.(不是所有人都喜欢name mangling. 去平衡可能的命名冲突, 被更高级的调用者造成)
+
+**Public and internal interfaces**
+
+Any backwards compatibility guarantees apply only to public interfaces. Accordingly, it is important that users be able to clearly distinguish between public and internal interfaces.(向后的兼容性保证, 仅针对公有的接口. 据此, 使用者能清晰的分辨公有和内部接口)
+
+Documented interfaces are considered public, unless the documentation explicitly declares them to be provisional or internal interfaces exempt from the usual backwards compatibility guarantees. All undocumented interfaces should be assumed to be internal.(文档中描述的接口都应该是公有的, 除非文档显示的声明了临时或内部接口, 免除其向后兼容的保证, 未在文档中描述的都被假定为内部的使用的)
+
+To better support introspection, modules should explicitly declare the names in their public API using the __all__ attribute. Setting __all__ to an empty list indicates that the module has no public API.(为了更好的)
+
+Even with __all__ set appropriately, internal interfaces (packages, modules, classes, functions, attributes or other names) should still be prefixed with a single leading underscore.
+
+An interface is also considered internal if any containing namespace (package, module or class) is considered internal.
+
+Imported names should always be considered an implementation detail. Other modules must not rely on indirect access to such imported names unless they are an explicitly documented part of the containing module's API, such as os.path or a package's __init__ module that exposes functionality from submodules.
+
+Programming Recommendations
+Code should be written in a way that does not disadvantage other implementations of Python (PyPy, Jython, IronPython, Cython, Psyco, and such).
+
+For example, do not rely on CPython's efficient implementation of in-place string concatenation for statements in the form a += b or a = a + b. This optimization is fragile even in CPython (it only works for some types) and isn't present at all in implementations that don't use refcounting. In performance sensitive parts of the library, the ''.join() form should be used instead. This will ensure that concatenation occurs in linear time across various implementations.
+
+Comparisons to singletons like None should always be done with is or is not, never the equality operators.
+
+Also, beware of writing if x when you really mean if x is not None -- e.g. when testing whether a variable or argument that defaults to None was set to some other value. The other value might have a type (such as a container) that could be false in a boolean context!
+
+Use is not operator rather than not ... is. While both expressions are functionally identical, the former is more readable and preferred.
+
+Yes:
+
+if foo is not None:
+No:
+
+if not foo is None:
+When implementing ordering operations with rich comparisons, it is best to implement all six operations (__eq__, __ne__, __lt__, __le__, __gt__, __ge__) rather than relying on other code to only exercise a particular comparison.
+
+To minimize the effort involved, the functools.total_ordering() decorator provides a tool to generate missing comparison methods.
+
+PEP 207 indicates that reflexivity rules are assumed by Python. Thus, the interpreter may swap y > x with x < y, y >= x with x <= y, and may swap the arguments of x == y and x != y. The sort() and min() operations are guaranteed to use the < operator and the max() function uses the > operator. However, it is best to implement all six operations so that confusion doesn't arise in other contexts.
+
+Always use a def statement instead of an assignment statement that binds a lambda expression directly to an identifier.
+
+Yes:
+
+def f(x): return 2*x
+No:
+
+f = lambda x: 2*x
+The first form means that the name of the resulting function object is specifically 'f' instead of the generic '<lambda>'. This is more useful for tracebacks and string representations in general. The use of the assignment statement eliminates the sole benefit a lambda expression can offer over an explicit def statement (i.e. that it can be embedded inside a larger expression)
+
+Derive exceptions from Exception rather than BaseException. Direct inheritance from BaseException is reserved for exceptions where catching them is almost always the wrong thing to do.
+
+Design exception hierarchies based on the distinctions that code catching the exceptions is likely to need, rather than the locations where the exceptions are raised. Aim to answer the question "What went wrong?" programmatically, rather than only stating that "A problem occurred" (see PEP 3151 for an example of this lesson being learned for the builtin exception hierarchy)
+
+Class naming conventions apply here, although you should add the suffix "Error" to your exception classes if the exception is an error. Non-error exceptions that are used for non-local flow control or other forms of signaling need no special suffix.
+
+Use exception chaining appropriately. In Python 3, "raise X from Y" should be used to indicate explicit replacement without losing the original traceback.
+
+When deliberately replacing an inner exception (using "raise X" in Python 2 or "raise X from None" in Python 3.3+), ensure that relevant details are transferred to the new exception (such as preserving the attribute name when converting KeyError to AttributeError, or embedding the text of the original exception in the new exception message).
+
+When raising an exception in Python 2, use raise ValueError('message') instead of the older form raise ValueError, 'message'.
+
+The latter form is not legal Python 3 syntax.
+
+The paren-using form also means that when the exception arguments are long or include string formatting, you don't need to use line continuation characters thanks to the containing parentheses.
+
+When catching exceptions, mention specific exceptions whenever possible instead of using a bare except: clause.
+
+For example, use:
+
+try:
+    import platform_specific_module
+except ImportError:
+    platform_specific_module = None
+A bare except: clause will catch SystemExit and KeyboardInterrupt exceptions, making it harder to interrupt a program with Control-C, and can disguise other problems. If you want to catch all exceptions that signal program errors, use except Exception: (bare except is equivalent to except BaseException:).
+
+A good rule of thumb is to limit use of bare 'except' clauses to two cases:
+
+If the exception handler will be printing out or logging the traceback; at least the user will be aware that an error has occurred.
+If the code needs to do some cleanup work, but then lets the exception propagate upwards with raise. try...finally can be a better way to handle this case.
+When binding caught exceptions to a name, prefer the explicit name binding syntax added in Python 2.6:
+
+try:
+    process_data()
+except Exception as exc:
+    raise DataProcessingFailedError(str(exc))
+This is the only syntax supported in Python 3, and avoids the ambiguity problems associated with the older comma-based syntax.
+
+When catching operating system errors, prefer the explicit exception hierarchy introduced in Python 3.3 over introspection of errno values.
+
+Additionally, for all try/except clauses, limit the try clause to the absolute minimum amount of code necessary. Again, this avoids masking bugs.
+
+Yes:
+
+try:
+    value = collection[key]
+except KeyError:
+    return key_not_found(key)
+else:
+    return handle_value(value)
+No:
+
+try:
+    # Too broad!
+    return handle_value(collection[key])
+except KeyError:
+    # Will also catch KeyError raised by handle_value()
+    return key_not_found(key)
+When a resource is local to a particular section of code, use a with statement to ensure it is cleaned up promptly and reliably after use. A try/finally statement is also acceptable.
+
+Context managers should be invoked through separate functions or methods whenever they do something other than acquire and release resources. For example:
+
+Yes:
+
+with conn.begin_transaction():
+    do_stuff_in_transaction(conn)
+No:
+
+with conn:
+    do_stuff_in_transaction(conn)
+The latter example doesn't provide any information to indicate that the __enter__ and __exit__ methods are doing something other than closing the connection after a transaction. Being explicit is important in this case.
+
+Be consistent in return statements. Either all return statements in a function should return an expression, or none of them should. If any return statement returns an expression, any return statements where no value is returned should explicitly state this as return None, and an explicit return statement should be present at the end of the function (if reachable).
+
+Yes:
+
+def foo(x):
+    if x >= 0:
+        return math.sqrt(x)
+    else:
+        return None
+
+def bar(x):
+    if x < 0:
+        return None
+    return math.sqrt(x)
+No:
+
+def foo(x):
+    if x >= 0:
+        return math.sqrt(x)
+
+def bar(x):
+    if x < 0:
+        return
+    return math.sqrt(x)
+Use string methods instead of the string module.
+
+String methods are always much faster and share the same API with unicode strings. Override this rule if backward compatibility with Pythons older than 2.0 is required.
+
+Use ''.startswith() and ''.endswith() instead of string slicing to check for prefixes or suffixes.
+
+startswith() and endswith() are cleaner and less error prone. For example:
+
+Yes: if foo.startswith('bar'):
+No:  if foo[:3] == 'bar':
+Object type comparisons should always use isinstance() instead of comparing types directly.
+
+Yes: if isinstance(obj, int):
+
+No:  if type(obj) is type(1):
+When checking if an object is a string, keep in mind that it might be a unicode string too! In Python 2, str and unicode have a common base class, basestring, so you can do:
+
+if isinstance(obj, basestring):
+Note that in Python 3, unicode and basestring no longer exist (there is only str) and a bytes object is no longer a kind of string (it is a sequence of integers instead)
+
+For sequences, (strings, lists, tuples), use the fact that empty sequences are false.
+
+Yes: if not seq:
+     if seq:
+
+No: if len(seq):
+    if not len(seq):
+Don't write string literals that rely on significant trailing whitespace. Such trailing whitespace is visually indistinguishable and some editors (or more recently, reindent.py) will trim them.
+
+Don't compare boolean values to True or False using ==.
+
+Yes:   if greeting:
+No:    if greeting == True:
+Worse: if greeting is True:
+Function Annotations
+With the acceptance of PEP 484, the style rules for function annotations are changing.
+
+In order to be forward compatible, function annotations in Python 3 code should preferably use PEP 484 syntax. (There are some formatting recommendations for annotations in the previous section.)
+
+The experimentation with annotation styles that was recommended previously in this PEP is no longer encouraged.
+
+However, outside the stdlib, experiments within the rules of PEP 484 are now encouraged. For example, marking up a large third party library or application with PEP 484 style type annotations, reviewing how easy it was to add those annotations, and observing whether their presence increases code understandability.
+
+The Python standard library should be conservative in adopting such annotations, but their use is allowed for new code and for big refactorings.
+
+For code that wants to make a different use of function annotations it is recommended to put a comment of the form:
+
+# type: ignore
+near the top of the file; this tells type checker to ignore all annotations. (More fine-grained ways of disabling complaints from type checkers can be found in PEP 484.)
+
+Like linters, type checkers are optional, separate tools. Python interpreters by default should not issue any messages due to type checking and should not alter their behavior based on annotations.
+
+Users who don't want to use type checkers are free to ignore them. However, it is expected that users of third party library packages may want to run type checkers over those packages. For this purpose PEP 484 recommends the use of stub files: .pyi files that are read by the type checker in preference of the corresponding .py files. Stub files can be distributed with a library, or separately (with the library author's permission) through the typeshed repo [5].
+
+For code that needs to be backwards compatible, type annotations can be added in the form of comments. See the relevant section of PEP 484 [6].
+
+Variable annotations
+PEP 526 introduced variable annotations. The style recommendations for them are similar to those on function annotations described above:
+
+Annotations for module level variables, class and instance variables, and local variables should have a single space after the colon.
+
+There should be no space before the colon.
+
+If an assignment has a right hand side, then the equality sign should have exactly one space on both sides.
+
+Yes:
+
+code: int
+
+class Point:
+    coords: Tuple[int, int]
+    label: str = '<unknown>'
+No:
+
+code:int  # No space after colon
+code : int  # Space before colon
+
+class Test:
+    result: int=0  # No spaces around equality sign
+Although the PEP 526 is accepted for Python 3.6, the variable annotation syntax is the preferred syntax for stub files on all versions of Python (see PEP 484 for details).
+
+Footnotes
+
+[7]	Hanging indentation is a type-setting style where all the lines in a paragraph are indented except the first line. In the context of Python, the term is used to describe a style where the opening parenthesis of a parenthesized statement is the last non-whitespace character of the line, with subsequent lines being indented until the closing parenthesis.
 
 
 
