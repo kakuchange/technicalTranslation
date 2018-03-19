@@ -705,24 +705,25 @@ Any backwards compatibility guarantees apply only to public interfaces. Accordin
 
 Documented interfaces are considered public, unless the documentation explicitly declares them to be provisional or internal interfaces exempt from the usual backwards compatibility guarantees. All undocumented interfaces should be assumed to be internal.(文档中描述的接口都应该是公有的, 除非文档显示的声明了临时或内部接口, 免除其向后兼容的保证, 未在文档中描述的都被假定为内部的使用的)
 
-To better support introspection, modules should explicitly declare the names in their public API using the __all__ attribute. Setting __all__ to an empty list indicates that the module has no public API.(为了更好的)
+To better support introspection, modules should explicitly declare the names in their public API using the \_\_all\_\_ attribute. Setting \_\_all\_\_ to an empty list indicates that the module has no public API.(为了更好的支持自省, 模块应显示的声明the names 在自己的公有api, 使用\_\_all\_\_属性, 设置\_\_all\_\_ = []指示这个模块没有公有api.)
 
-Even with __all__ set appropriately, internal interfaces (packages, modules, classes, functions, attributes or other names) should still be prefixed with a single leading underscore.
+Even with \_\_all\_\_ set appropriately, internal interfaces (packages, modules, classes, functions, attributes or other names) should still be prefixed with a single leading underscore.(即使已经设置了\_\_all\_\_属性, 内部的接口(packages, modules, classes, functions, attributes, or other names)仍应该以单下划线做为前缀)
 
-An interface is also considered internal if any containing namespace (package, module or class) is considered internal.
+An interface is also considered internal if any containing namespace (package, module or class) is considered internal.(如果一个接口包含的任何命名空间是内部接口, 也应该被认为是内部接口.)
 
-Imported names should always be considered an implementation detail. Other modules must not rely on indirect access to such imported names unless they are an explicitly documented part of the containing module's API, such as os.path or a package's __init__ module that exposes functionality from submodules.
+Imported names should always be considered an implementation detail. Other modules must not rely on indirect access to such imported names unless they are an explicitly documented part of the containing module's API, such as os.path or a package's \_\_init\_\_ module that exposes functionality from submodules.(直接导入包名应该总作为一个实现细节被考虑. 其它modules 必须不信赖间接访问到这样import names , 除非它们是显示的在文档中说明包含了module的api, such as os.path 或一个package's init module 中暴露了这样的功能从子模块中. #TODO 感觉没说的很明白)
 
-Programming Recommendations
-Code should be written in a way that does not disadvantage other implementations of Python (PyPy, Jython, IronPython, Cython, Psyco, and such).
+### Programming Recommendations
 
-For example, do not rely on CPython's efficient implementation of in-place string concatenation for statements in the form a += b or a = a + b. This optimization is fragile even in CPython (it only works for some types) and isn't present at all in implementations that don't use refcounting. In performance sensitive parts of the library, the ''.join() form should be used instead. This will ensure that concatenation occurs in linear time across various implementations.
+Code should be written in a way that does not disadvantage other implementations of Python (PyPy, Jython, IronPython, Cython, Psyco, and such).(代码编写应以一种不会是另一python实现的缺点的方式进行)
 
-Comparisons to singletons like None should always be done with is or is not, never the equality operators.
+For example, do not rely on CPython's efficient implementation of in-place string concatenation for statements in the form a += b or a = a + b. This optimization is fragile even in CPython (it only works for some types) and isn't present at all in implementations that don't use refcounting. In performance sensitive parts of the library, the ''.join() form should be used instead. This will ensure that concatenation occurs in linear time across various implementations.(这段举例说明了, 对于字符串的串联操作, 原位加法 += 并不如''.join()好, 应该 += 是Cpython的优化(虽然这个优化并不全都有效))
 
-Also, beware of writing if x when you really mean if x is not None -- e.g. when testing whether a variable or argument that defaults to None was set to some other value. The other value might have a type (such as a container) that could be false in a boolean context!
+Comparisons to singletons like None should always be done with is or is not, never the equality operators.(对"单例"的比较, 如None, 应该使用is or is not never the equality operators.)
 
-Use is not operator rather than not ... is. While both expressions are functionally identical, the former is more readable and preferred.
+Also, beware of writing if x when you really mean if x is not None -- e.g. when testing whether a variable or argument that defaults to None was set to some other value. The other value might have a type (such as a container) that could be false in a boolean context!(同时, 应该意识到, 当你写 if x 时, 你真正的意思是if x is not None, 例如, 当测试一个变量或参数是否是None为默认值时, The value might have a type(such as a container) 可能是false 在布尔值层面上.)
+
+Use is not operator rather than not ... is. While both expressions are functionally identical, the former is more readable and preferred.(使用is not 而非 not ... is, 当两者功能上一样时, 前者可读性强)
 
 Yes:
 
@@ -730,13 +731,14 @@ if foo is not None:
 No:
 
 if not foo is None:
-When implementing ordering operations with rich comparisons, it is best to implement all six operations (__eq__, __ne__, __lt__, __le__, __gt__, __ge__) rather than relying on other code to only exercise a particular comparison.
 
-To minimize the effort involved, the functools.total_ordering() decorator provides a tool to generate missing comparison methods.
+When implementing ordering operations with rich comparisons, it is best to implement all six operations (\_\_eq\_\_, \_\_ne\_\_, \_\_lt\_\_, \_\_le\_\_, \_\_gt\_\_, \_\_ge\_\_) rather than relying on other code to only exercise a particular comparison.(当实现比较操作时, 最好全部实现这几种比较, 而非某一种)
 
-PEP 207 indicates that reflexivity rules are assumed by Python. Thus, the interpreter may swap y > x with x < y, y >= x with x <= y, and may swap the arguments of x == y and x != y. The sort() and min() operations are guaranteed to use the < operator and the max() function uses the > operator. However, it is best to implement all six operations so that confusion doesn't arise in other contexts.
+To minimize the effort involved, the functools.total_ordering() decorator provides a tool to generate missing comparison methods.(为了最小化投入, functools.total_ordering() 这个装饰器, 提供了一个工具用于生成缺失的比较方法.)
 
-Always use a def statement instead of an assignment statement that binds a lambda expression directly to an identifier.
+PEP 207 indicates that reflexivity rules are assumed by Python. Thus, the interpreter may swap y > x with x < y, y >= x with x <= y, and may swap the arguments of x == y and x != y. The sort() and min() operations are guaranteed to use the < operator and the max() function uses the > operator. However, it is best to implement all six operations so that confusion doesn't arise in other contexts.(这一段解释了为什么要全都实现所有的比较)
+
+Always use a def statement instead of an assignment statement that binds a lambda expression directly to an identifier.(总使用def 语句而非assignment 语句(该语句将一个lambda 表达式直接给一个标识符))
 
 Yes:
 
@@ -744,25 +746,26 @@ def f(x): return 2*x
 No:
 
 f = lambda x: 2*x
-The first form means that the name of the resulting function object is specifically 'f' instead of the generic '<lambda>'. This is more useful for tracebacks and string representations in general. The use of the assignment statement eliminates the sole benefit a lambda expression can offer over an explicit def statement (i.e. that it can be embedded inside a larger expression)
 
-Derive exceptions from Exception rather than BaseException. Direct inheritance from BaseException is reserved for exceptions where catching them is almost always the wrong thing to do.
+The first form means that the name of the resulting function object is specifically 'f' instead of the generic '<lambda>'. This is more useful for tracebacks and string representations in general. The use of the assignment statement eliminates the sole benefit a lambda expression can offer over an explicit def statement (i.e. that it can be embedded inside a larger expression)(def的结果将一个函数对象定义给了"f", 而非一般的lambda函数, 这在异常追踪及string representations 上更有用, lambda 省略了命名, 可以内嵌到一个长表达式中)
 
-Design exception hierarchies based on the distinctions that code catching the exceptions is likely to need, rather than the locations where the exceptions are raised. Aim to answer the question "What went wrong?" programmatically, rather than only stating that "A problem occurred" (see PEP 3151 for an example of this lesson being learned for the builtin exception hierarchy)
+Derive exceptions from Exception rather than BaseException. Direct inheritance from BaseException is reserved for exceptions where catching them is almost always the wrong thing to do.(异常继承自Exception而非BaseException)
 
-Class naming conventions apply here, although you should add the suffix "Error" to your exception classes if the exception is an error. Non-error exceptions that are used for non-local flow control or other forms of signaling need no special suffix.
+Design exception hierarchies based on the distinctions that code catching the exceptions is likely to need, rather than the locations where the exceptions are raised. Aim to answer the question "What went wrong?" programmatically, rather than only stating that "A problem occurred" (see PEP 3151 for an example of this lesson being learned for the builtin exception hierarchy)(设计异常类, 应以异常的种类出发, 而非哪里产生了异常. 致力于解决what went wrong 而非 A problem occreed. (PEP 3252中有这方面的例子, 有关于builtin exception hierarchy))
 
-Use exception chaining appropriately. In Python 3, "raise X from Y" should be used to indicate explicit replacement without losing the original traceback.
+Class naming conventions apply here, although you should add the suffix "Error" to your exception classes if the exception is an error. Non-error exceptions that are used for non-local flow control or other forms of signaling need no special suffix.(类名的约定也适用于这, 尽管你应该增加Error的后缀在exception classes, if the exception is an error. 其它不是 error 的exception, 用来作非局部的控制流或其形式的信号, 应用对应的后缀.)
 
-When deliberately replacing an inner exception (using "raise X" in Python 2 or "raise X from None" in Python 3.3+), ensure that relevant details are transferred to the new exception (such as preserving the attribute name when converting KeyError to AttributeError, or embedding the text of the original exception in the new exception message).
+Use exception chaining appropriately. In Python 3, "raise X from Y" should be used to indicate explicit replacement without losing the original traceback.(使用链式的exception 恰当的, In python3, ```raise X from Y```应该被用来显示替换那些没有original 的traceback)
 
-When raising an exception in Python 2, use raise ValueError('message') instead of the older form raise ValueError, 'message'.
+When deliberately replacing an inner exception (using "raise X" in Python 2 or "raise X from None" in Python 3.3+), ensure that relevant details are transferred to the new exception (such as preserving the attribute name when converting KeyError to AttributeError, or embedding the text of the original exception in the new exception message).(有意替换一个内部的exception(使用上面说的形式), 确保相关的细节被传递到了新的exception)
 
-The latter form is not legal Python 3 syntax.
+When raising an exception in Python 2, use raise ValueError('message') instead of the older form raise ValueError, 'message'.(没啥好说的,很直接了)
 
-The paren-using form also means that when the exception arguments are long or include string formatting, you don't need to use line continuation characters thanks to the containing parentheses.
+The latter form is not legal Python 3 syntax.(后一个写法在Python3中是非法的)
 
-When catching exceptions, mention specific exceptions whenever possible instead of using a bare except: clause.
+The paren-using form also means that when the exception arguments are long or include string formatting, you don't need to use line continuation characters thanks to the containing parentheses.(用括号可以免去换行)
+
+When catching exceptions, mention specific exceptions whenever possible instead of using a bare except: clause.(捕获异常时, 指明具体要捕获哪个异常)
 
 For example, use:
 
@@ -770,23 +773,26 @@ try:
     import platform_specific_module
 except ImportError:
     platform_specific_module = None
-A bare except: clause will catch SystemExit and KeyboardInterrupt exceptions, making it harder to interrupt a program with Control-C, and can disguise other problems. If you want to catch all exceptions that signal program errors, use except Exception: (bare except is equivalent to except BaseException:).
 
-A good rule of thumb is to limit use of bare 'except' clauses to two cases:
+A bare except: clause will catch SystemExit and KeyboardInterrupt exceptions, making it harder to interrupt a program with Control-C, and can disguise other problems. If you want to catch all exceptions that signal program errors, use except Exception: (bare except is equivalent to except BaseException:).(捕获所有异常, bare except, 不应该的. 或者使用Exception代替所有exception)
+
+A good rule of thumb is to limit use of bare 'except' clauses to two cases:(大拇指规则?)
 
 If the exception handler will be printing out or logging the traceback; at least the user will be aware that an error has occurred.
 If the code needs to do some cleanup work, but then lets the exception propagate upwards with raise. try...finally can be a better way to handle this case.
+
 When binding caught exceptions to a name, prefer the explicit name binding syntax added in Python 2.6:
 
 try:
     process_data()
 except Exception as exc:
     raise DataProcessingFailedError(str(exc))
+
 This is the only syntax supported in Python 3, and avoids the ambiguity problems associated with the older comma-based syntax.
 
 When catching operating system errors, prefer the explicit exception hierarchy introduced in Python 3.3 over introspection of errno values.
 
-Additionally, for all try/except clauses, limit the try clause to the absolute minimum amount of code necessary. Again, this avoids masking bugs.
+Additionally, for all try/except clauses, limit the try clause to the absolute minimum amount of code necessary. Again, this avoids masking bugs.(这几段说, python3, 仅支持显示的明确的as 给予exception名字, 以及不要try 大段代码, 以防掩盖bug)
 
 Yes:
 
@@ -804,9 +810,10 @@ try:
 except KeyError:
     # Will also catch KeyError raised by handle_value()
     return key_not_found(key)
-When a resource is local to a particular section of code, use a with statement to ensure it is cleaned up promptly and reliably after use. A try/finally statement is also acceptable.
 
-Context managers should be invoked through separate functions or methods whenever they do something other than acquire and release resources. For example:
+When a resource is local to a particular section of code, use a with statement to ensure it is cleaned up promptly and reliably after use. A try/finally statement is also acceptable.(推荐使用with块, 确保在使用完成后迅速可靠的释放, try/finally也是可接受的)
+
+Context managers should be invoked through separate functions or methods whenever they do something other than acquire and release resources. For example:(上下文管理器应该通过独立的函数调用, 在任何acquire and release resources时).
 
 Yes:
 
@@ -816,9 +823,10 @@ No:
 
 with conn:
     do_stuff_in_transaction(conn)
-The latter example doesn't provide any information to indicate that the __enter__ and __exit__ methods are doing something other than closing the connection after a transaction. Being explicit is important in this case.
 
-Be consistent in return statements. Either all return statements in a function should return an expression, or none of them should. If any return statement returns an expression, any return statements where no value is returned should explicitly state this as return None, and an explicit return statement should be present at the end of the function (if reachable).
+The latter example doesn't provide any information to indicate that the \_\_enter\_\_ and \_\_exit\_\_ methods are doing something other than closing the connection after a transaction. Being explicit is important in this case. (下面的例子不提供任何信息指明, \_\_enter\_\_ and \_\_exit\_\_方法做了什么, 除了在交易完成后关闭连接. 显示的说明, 在这样的例子下很重要)
+
+Be consistent in return statements. Either all return statements in a function should return an expression, or none of them should. If any return statement returns an expression, any return statements where no value is returned should explicitly state this as return None, and an explicit return statement should be present at the end of the function (if reachable).(在return 语句上保持一致. 或者所有函数return an expression 或者,都不. 如果有一个return 语句返回了expression, 则别的没有返回值的应该显示的返回 None.)
 
 Yes:
 
@@ -842,44 +850,52 @@ def bar(x):
     if x < 0:
         return
     return math.sqrt(x)
+
 Use string methods instead of the string module.
 
-String methods are always much faster and share the same API with unicode strings. Override this rule if backward compatibility with Pythons older than 2.0 is required.
+String methods are always much faster and share the same API with unicode strings. Override this rule if backward compatibility with Pythons older than 2.0 is required.(String的方法, 总比unicode的string要快, 有相同的API, 重写这块的规则, 如果要向后兼容(2.0以前的Python))
 
-Use ''.startswith() and ''.endswith() instead of string slicing to check for prefixes or suffixes.
+Use ''.startswith() and ''.endswith() instead of string slicing to check for prefixes or suffixes.(使用这两个方法来check for prefixes or suffixes, 而非切片操作)
 
 startswith() and endswith() are cleaner and less error prone. For example:
 
 Yes: if foo.startswith('bar'):
 No:  if foo[:3] == 'bar':
-Object type comparisons should always use isinstance() instead of comparing types directly.
+
+Object type comparisons should always use isinstance() instead of comparing types directly.(类型比较用isinstance(), 而非直接比较type)
 
 Yes: if isinstance(obj, int):
 
 No:  if type(obj) is type(1):
-When checking if an object is a string, keep in mind that it might be a unicode string too! In Python 2, str and unicode have a common base class, basestring, so you can do:
+
+When checking if an object is a string, keep in mind that it might be a unicode string too! In Python 2, str and unicode have a common base class, basestring, so you can do:(Python2中str和unicode都是string, 它们有共同的basestring, 通过此判断是否是string)
 
 if isinstance(obj, basestring):
-Note that in Python 3, unicode and basestring no longer exist (there is only str) and a bytes object is no longer a kind of string (it is a sequence of integers instead)
 
-For sequences, (strings, lists, tuples), use the fact that empty sequences are false.
+Note that in Python 3, unicode and basestring no longer exist (there is only str) and a bytes object is no longer a kind of string (it is a sequence of integers instead)(在Python3中, 只有str, bytes object 不再是string)
+
+For sequences, (strings, lists, tuples), use the fact that empty sequences are false.(很直观的例子)
 
 Yes: if not seq:
      if seq:
 
 No: if len(seq):
     if not len(seq):
+
+sequences
 Don't write string literals that rely on significant trailing whitespace. Such trailing whitespace is visually indistinguishable and some editors (or more recently, reindent.py) will trim them.
 
-Don't compare boolean values to True or False using ==.
-
+Don't compare boolean values to True or False using ==.(很直观, 曾犯过)
+sequences
 Yes:   if greeting:
 No:    if greeting == True:
 Worse: if greeting is True:
-Function Annotations
-With the acceptance of PEP 484, the style rules for function annotations are changing.
 
-In order to be forward compatible, function annotations in Python 3 code should preferably use PEP 484 syntax. (There are some formatting recommendations for annotations in the previous section.)
+#### Function Annotations(平时使用google style annotation, don't translate below)
+
+With the acceptance of PEP 484, the style rules for function annotations are changing.(PEP 484 函数注释的规则改变了)
+
+In order to be forward compatible, function annotations in Python 3 code should preferably use PEP 484 syntax. (There are some formatting recommendations for annotations in the previous section.)(为了前向兼容, Python 3 的函数注释应该使用PEP 484的语法, 那里有一些形式上的推荐, 在前面的部分)
 
 The experimentation with annotation styles that was recommended previously in this PEP is no longer encouraged.
 
@@ -898,7 +914,7 @@ Users who don't want to use type checkers are free to ignore them. However, it i
 
 For code that needs to be backwards compatible, type annotations can be added in the form of comments. See the relevant section of PEP 484 [6].
 
-Variable annotations
+#### Variable annotations
 PEP 526 introduced variable annotations. The style recommendations for them are similar to those on function annotations described above:
 
 Annotations for module level variables, class and instance variables, and local variables should have a single space after the colon.
@@ -925,29 +941,16 @@ Although the PEP 526 is accepted for Python 3.6, the variable annotation syntax 
 
 Footnotes
 
-[7]	Hanging indentation is a type-setting style where all the lines in a paragraph are indented except the first line. In the context of Python, the term is used to describe a style where the opening parenthesis of a parenthesized statement is the last non-whitespace character of the line, with subsequent lines being indented until the closing parenthesis.
-
-
-
-
-
-
-
-
-
-
 
 ### 引用
 1. [1 PEP7 Style Guide for c Code, van Rossum](https://www.python.org/dev/peps/pep-0007/)
 
-2. 2 Barry's GUN Mailman style guide [http://barry.warsaw.us/software/STYLEGUIDE.txt](http://barry.warsaw.us/software/STYLEGUIDE.txt)
-
-3. 
+ps: 还有一些其它引用, 未列出.
 
 
 **brace**: 大括号(花括号)
 **bracket**: 中括号(方括号)
-**parenthese**: 小括号(圆括号) 
+**parenthesis**: 小括号(圆括号) 
 
 ## 注意
 
