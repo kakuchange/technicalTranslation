@@ -10,14 +10,14 @@
 ### 主要内容
 
 - 编程语言相关
-    - [ ] [Python](https://github.com/kakuchange/pythonSkill)
+    - [Python](https://github.com/kakuchange/pythonSkill)
         - [x] [Python编码规范](https://github.com/kakuchange/technicalTranslation/blob/master/language/Python/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83.md)  
           [Style Guide for Python Code (Python Enhancement Proposal pep8)](https://www.python.org/dev/peps/pep-0008/)
 
-        - [ ] [Python 异步编程 asyncio篇](https://github.com/kakuchange/technicalTranslation/blob/master/language/Python/Python%20%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%20asyncio%E7%AF%87.md) 
+        - [x] [Python 异步编程 asyncio篇初探](https://github.com/kakuchange/technicalTranslation/blob/master/language/Python/Python%20%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%20asyncio%E7%AF%87.md) 
             [A guide to asynchronous programming in Python with asyncio](https://medium.freecodecamp.org/a-guide-to-asynchronous-programming-in-python-with-asyncio-232e2afa44f6)
 
-    - [ ] [Golang](https://golang.org/)
+    - [Golang](https://golang.org/)
 - 算法相关
 
     - 算法部分的内容, 会记录在另一个repo: [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
