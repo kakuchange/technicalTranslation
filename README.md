@@ -1,13 +1,7 @@
 # technicalTranslation
  Quality English documents reading plan.
 
-### 简介:有质量的英文"文档"~~翻译~~**摘要总结**
-
-此项目为个人学习计划的一部分, 可能会涉及的方面有些多杂(从编程语言到算法, 再到提升效率的工具),文章的种类也会比较杂(官方文档, 博客, 问答...). 我更可能的以上面提到的内容来分类,使之成为更方便的学习索引. 
-
-*计划调整: 翻译过程中发现, 纯原文的翻译一来耗时, 二来可能对有需要的人帮助并不明显. 调整计划为, 摘要总结式的翻译.*
-
-*项目由来: 看过总只是看过, 文字记录的过程可以让思考沉淀. 加深理解*
+### 简介:有质量的英文"文档"摘要式总结
 
 ### 主要内容
 
@@ -22,7 +16,7 @@
         - [ ] [Python 包管理工具setuptools](https://github.com/kakuchange/technicalTranslation/blob/master/other/setuptools.md)
 
     - [Golang](https://golang.org/)
-- 算法相关
+- 算法相关(另有repo)
 
     - [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
 
