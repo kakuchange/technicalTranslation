@@ -15,6 +15,10 @@
 
         - [ ] [Python 包管理工具setuptools](https://github.com/kakuchange/technicalTranslation/blob/master/other/setuptools.md)
 
+        - [ ] [Concurrency with Processes, Threads and Coroutines](https://pymotw.com/3/concurrency.html)
+
+            - [ ] [asyncio -- Asychronous I/O, event loop, and concurrency tools]
+
     - [Golang](https://golang.org/)
 - 算法相关(另有repo)
 
