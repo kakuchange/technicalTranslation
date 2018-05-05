@@ -20,11 +20,11 @@
             - [ ] [asyncio -- Asychronous I/O, event loop, and concurrency tools]
         - [ ] [what are descriptors](https://www.blog.pythonlibrary.org/2016/06/10/python-201-what-are-descriptors/)
 
-        - [ ] [由单例模式说起--元类,描述符, __new__]()  TODO
-
     - [Golang](https://golang.org/)
+        
+       - [ ] fake
 
-- algorithm relative(另有repo)
+- algorithm relative(in other repo)
 
     - [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
 
