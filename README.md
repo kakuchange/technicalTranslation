@@ -1,11 +1,11 @@
 # technicalTranslation
+
  Quality English documents reading plan.
 
-### 简介:有质量的英文"文档"摘要式总结
+## Content
 
-### 主要内容
+- program language relative
 
-- 编程语言相关
     - [Python](https://github.com/kakuchange/pythonSkill)
         - [x] [Python编码规范](https://github.com/kakuchange/technicalTranslation/blob/master/language/Python/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83.md)  
           [Style Guide for Python Code (Python Enhancement Proposal pep8)](https://www.python.org/dev/peps/pep-0008/)
@@ -20,17 +20,25 @@
             - [ ] [asyncio -- Asychronous I/O, event loop, and concurrency tools]
         - [ ] [what are descriptors](https://www.blog.pythonlibrary.org/2016/06/10/python-201-what-are-descriptors/)
 
+        - [ ] [由单例模式说起--元类,描述符, __new__]()  TODO
+
     - [Golang](https://golang.org/)
-- 算法相关(另有repo)
+
+- algorithm relative(另有repo)
 
     - [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
 
-- 其它
+- other
+
   - [x] [在Git中执行撤销操作](https://github.com/kakuchange/technicalTranslation/blob/master/other/%E5%9C%A8Git%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C.md)  
     [How to undo (almost) anything with Git](https://blog.github.com/2015-06-08-how-to-undo-almost-anything-with-git/)
 
   - [ ] [进程管理工具supervisor](https://github.com/kakuchange/technicalTranslation/blob/master/other/supervisor.md)
 
+  - [ ] [how-to-gitignore](https://labs.consol.de/development/git/2017/02/22/gitignore.html)
 
 
-注意:我尽可能保证文章质量, 但也难免有理解不准确的地方, 欢迎大家指出.  
+注意:我尽可能保证文章质量, 但也难免有理解不准确的地方, 欢迎大家指出.
+
+另外:很多资料都是和某个库具体相关的, 如果是直接翻译的, 我会放在这里, 偏总结使用的,我会放在对应的仓库中.
+
