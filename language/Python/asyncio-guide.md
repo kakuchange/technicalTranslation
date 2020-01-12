@@ -48,7 +48,8 @@ class Task(futures.Future):
 **Event Loop**— think of it as the central executor in asyncio.(asyncio的调度中心)
 
 之前说过了,对于单线程而言, 你是无法在阻塞时做其实的事情(多线程可以实现异步程序), 但asyncio基于事件循环的不同, 具体看下面的图.
-![](../../img/asyncio1.jpg)
+
+![](../../resources/img/asyncio1.jpg)
 
 从图中你可看出:
 

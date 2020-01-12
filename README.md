@@ -1,45 +1,35 @@
-# technicalTranslation
+# Technical Documentation Translation.
 
- Quality English documents reading plan.
+多学一种语言, 多发现另一片天地🙃.
 
-## Content
+You will find a new world if you learn another language🙃.
 
-- program language relative
+# Overview
 
-    - [Python](https://github.com/kakuchange/pythonSkill)
-        - [x] [Python编码规范](https://github.com/kakuchange/technicalTranslation/blob/master/language/Python/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83.md)  
-          [Style Guide for Python Code (Python Enhancement Proposal pep8)](https://www.python.org/dev/peps/pep-0008/)
+This Repo may contain just a link.
 
-        - [x] [Python 异步编程 asyncio篇初探](https://github.com/kakuchange/technicalTranslation/blob/master/language/Python/Python%20%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%20asyncio%E7%AF%87.md)  
-            [A guide to asynchronous programming in Python with asyncio](https://medium.freecodecamp.org/a-guide-to-asynchronous-programming-in-python-with-asyncio-232e2afa44f6)
+- [Algorithm](https://github.com/kakukosaku/DSA#Algorithm)
+- [Language](#Language)
+- [Infrastructure](#infrastructure)
 
-        - [ ] [Python 包管理工具setuptools](https://github.com/kakuchange/technicalTranslation/blob/master/other/setuptools.md)
+## Infrastructure
 
-        - [ ] [Concurrency with Processes, Threads and Coroutines](https://pymotw.com/3/concurrency.html)
+- [how to undo with git](infrastructure/how-to-undo-with-git.md)  
 
-            - [ ] [asyncio -- Asychronous I/O, event loop, and concurrency tools]
+- [ ] [process manage: supervisor]()
 
-        - [ ] [what are descriptors](https://www.blog.pythonlibrary.org/2016/06/10/python-201-what-are-descriptors/)
+- [ ] [how to gitignore](https://labs.consol.de/development/git/2017/02/22/gitignore.html)
 
-    - [Golang](https://golang.org/)
-        
-       - [ ] fake
+## Language
 
-- algorithm relative(in other repo)
+[Python](https://github.com/kakukosaku/pythonSkill)
 
-    - [algorithmAndDataStructure](https://github.com/kakuchange/algorithmAndDataStructure)
+- [python code style: pep8](language/python/python-code-style.md)  
 
-- other
+- [asynchronous program asyncio guide](language/python/asyncio-guide.md)  
 
-  - [x] [在Git中执行撤销操作](https://github.com/kakuchange/technicalTranslation/blob/master/other/%E5%9C%A8Git%E4%B8%AD%E6%89%A7%E8%A1%8C%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C.md)  
-    [How to undo (almost) anything with Git](https://blog.github.com/2015-06-08-how-to-undo-almost-anything-with-git/)
+- [ ] [Python 包管理工具setuptools](https://github.com/kakuchange/technicalTranslation/blob/master/other/setuptools.md)
 
-  - [ ] [进程管理工具supervisor](https://github.com/kakuchange/technicalTranslation/blob/master/other/supervisor.md)
+- [ ] [Concurrency with Processes, Threads and Coroutines](https://pymotw.com/3/concurrency.html)
 
-  - [ ] [how-to-gitignore](https://labs.consol.de/development/git/2017/02/22/gitignore.html)
-
-
-注意:我尽可能保证文章质量, 但也难免有理解不准确的地方, 欢迎大家指出.
-
-另外:很多资料都是和某个库具体相关的, 如果是直接翻译的, 我会放在这里, 偏总结使用的,我会放在对应的仓库中.
-
+- [ ] [what are descriptors](https://www.blog.pythonlibrary.org/2016/06/10/python-201-what-are-descriptors/)
