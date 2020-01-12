@@ -28,7 +28,7 @@ This Repo may contain just a link.
 
 - [asynchronous program asyncio guide](language/python/asyncio-guide.md)  
 
-- [ ] [Python 包管理工具setuptools](https://github.com/kakuchange/technicalTranslation/blob/master/other/setuptools.md)
+- [ ] [Python package manage: setuptools](https://github.com/kakuchange/technicalTranslation/blob/master/other/setuptools.md)
 
 - [ ] [Concurrency with Processes, Threads and Coroutines](https://pymotw.com/3/concurrency.html)
 
