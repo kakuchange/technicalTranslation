@@ -1,6 +1,6 @@
 # Technical Documentation Translation.
 
-多学一种语言, 多发现另一片天地🙃.
+多学一种语言, 多发现一片天地🙃.
 
 You will find a new world if you learn another language🙃.
 
