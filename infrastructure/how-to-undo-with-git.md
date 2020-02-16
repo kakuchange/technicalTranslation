@@ -173,6 +173,7 @@ Ref: [How to undo (almost) anything with Git](https://blog.github.com/2015-06-08
 - [rm](http://git-scm.com/docs/git-rm)
 
 # 额外补充图:  
+
 1. [stackoverflow上有关soft, mixed(default), hard三种merge模式的区别的图](https://stackoverflow.com/questions/3528245/whats-the-difference-between-git-reset-mixed-soft-and-hard)
 
 ![git tree movements visualized](../resources/img/git_tree_movement.jpg)
