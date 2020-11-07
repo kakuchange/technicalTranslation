@@ -6,30 +6,27 @@ You will find a new world if you learn another language🙃.
 
 # Overview
 
-This Repo may contain just a link.
+- [Algorithm](https://github.com/kakukosaku/DSA#Algorithm): link to another repository.
+- [Language Related Articles](#language-related-articles): 
+- [Engineering Problems](#engineering-problems)
+- [Misc Topics](#misc-topics)
 
-- [Algorithm](https://github.com/kakukosaku/DSA#Algorithm)
-- [Language](#Language)
-- [Infrastructure](#infrastructure)
+## Engineering Problems
 
-## Infrastructure
-
-- [how to undo with git](infrastructure/how-to-undo-with-git.md)  
-
+- [x] [how to undo with git](infrastructure/how-to-undo-with-git.md)  
 - [ ] [process manage: supervisor]()
-
 - [ ] [how to gitignore](https://labs.consol.de/development/git/2017/02/22/gitignore.html)
 
-## Language
+## Language Related Articles
 
-[Python](https://github.com/kakukosaku/pythonSkill)
+[Python](https://github.com/kakukosaku/handy-python)
 
-- [python code style: pep8](language/python/python-code-style.md)  
-
-- [asynchronous program asyncio guide](language/python/asyncio-guide.md)  
-
+- [x][python code style: pep8](language/python/python-code-style.md)  
+- [x][asynchronous program asyncio guide](language/python/asyncio-guide.md)  
 - [ ] [Python package manage: setuptools](https://github.com/kakuchange/technicalTranslation/blob/master/other/setuptools.md)
-
 - [ ] [Concurrency with Processes, Threads and Coroutines](https://pymotw.com/3/concurrency.html)
-
 - [ ] [what are descriptors](https://www.blog.pythonlibrary.org/2016/06/10/python-201-what-are-descriptors/)
+
+## Misc Topics
+
+- [ ] [ABC: Always Be Coding](https://medium.com/always-be-coding/abc-always-be-coding-d5f8051afce2)
